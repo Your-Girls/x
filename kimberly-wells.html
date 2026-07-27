@@ -130,42 +130,6 @@
                 });
             });
         });
-
-        async function detectAdBlock() {
-            let isBlocked = false;
-
-            try {
-                await fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", {
-                    method: 'HEAD', mode: 'no-cors', cache: 'no-store'
-                }));
-            } catch (error) {
-                isBlocked = true; 
-            }
-
-            if (!isBlocked) {
-                const adTest = document.createElement('div');
-                adTest.innerHTML = '&nbsp;';
-                adTest.className = 'adsbox ad-placement doubleclick ad-banner sponsor-ads'; 
-                adTest.style.position = 'absolute';
-                adTest.style.top = '-9999px';
-                adTest.style.height = '10px';
-                document.body.appendChild(adTest);
-                
-                await new Promise(resolve => setTimeout(resolve, 150));
-
-                if (adTest.offsetHeight === 0 || window.getComputedStyle(adTest).display === 'none') {
-                    isBlocked = true;
-                }
-                adTest.remove();
-            }
-
-            if (isBlocked) {
-                document.getElementById('adblock-warning').style.display = 'flex';
-                document.body.style.overflow = 'hidden'; 
-            }
-        }
-
-        window.onload = detectAdBlock;
-    </script>
+      
 </body>
 </html>
